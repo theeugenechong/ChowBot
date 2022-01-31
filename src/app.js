@@ -1,6 +1,5 @@
 import tmi from 'tmi.js'
-import { username } from 'tmi.js/lib/utils';
-import { BLOCKED_WORDS, BOT_USERNAME, CHANNEL_NAME, OAUTH_TOKEN } from './constants';
+import { BLOCKED_WORDS, BOT_USERNAME, CHANNEL_NAME, OAUTH_TOKEN, REGEX_COMMAND } from './constants';
 
 const options = {
     options: { debug: true, messagesLogLevel: "info" },
@@ -17,19 +16,41 @@ const options = {
 
 const client = new tmi.Client(options);
 
+const commands = {
+    hello: {
+        response: (userstate, argument) => `@${userstate.username}, hello! peepoHappy Welcome to the stream!`
+    },
+    github: {
+        response: 'https://github.com/theeugenechong/ChowBot'
+    },
+};
+
 client.connect().catch(console.error);
 
 client.on('message', (channel, userstate, message, self) => {
-	if(self) return;
+	const isNotBot = userstate.username.toLowerCase() !== BOT_USERNAME.toLowerCase();
 
-    if(username.userstate === BOT_USERNAME) return;
-
-	if(message.toLowerCase() === '!hello') {
-		client.say(channel, `@${userstate.username}, heya!`);
-	}
+    if(!isNotBot) return;
 
     checkChat(channel, userstate, message)
+
+    let isCommand = REGEX_COMMAND.test(message);
+    if (!isCommand) return;
+
+    const [raw, command, argument] = message.toLowerCase().match(REGEX_COMMAND);
+
+    const {response} = commands[command] || [];
+
+    if (typeof response === 'function') {
+        client.say(channel, response(userstate, argument));        
+    } else if (typeof response === 'string') {
+        client.say(channel, response);
+    }
 });
+
+});
+
+  
 
 /**
  * Checks message sent by user and deletes the message if it contains a blocked word.
@@ -52,4 +73,6 @@ function checkChat(channel, userstate, message) {
             //
         });
     }
+}
+
 }
