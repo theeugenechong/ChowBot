@@ -23,6 +23,14 @@ const commands = {
     github: {
         response: 'https://github.com/theeugenechong/ChowBot'
     },
+    fill: {
+        response: (userstate, argument) => { 
+            for(let i = 0; i < 10; i++) {
+                argument += argument;
+            }
+            return argument
+        }
+    }
 };
 
 client.connect().catch(console.error);
