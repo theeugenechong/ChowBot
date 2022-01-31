@@ -48,8 +48,13 @@ client.on('message', (channel, userstate, message, self) => {
     }
 });
 
+client.on('subscription', (channel, userstate) => {
+    respondToSubscription(channel, userstate);
 });
 
+client.on('cheer', (channel, userstate) => {
+    respondToCheer(channel, userstate)
+  })
   
 
 /**
@@ -75,4 +80,10 @@ function checkChat(channel, userstate, message) {
     }
 }
 
+function respondToSubscription(channel, userstate) {
+    client.say(channel, `@${userstate.username}, thank you for subscribing!`);
+}
+
+function respondToCheer(channel, userstate) {
+    client.say(channel, `Thank you @${userstate.username} for the ${userstate.bits} bits!`);
 }
