@@ -24,11 +24,12 @@ const commands = {
         response: 'https://github.com/theeugenechong/ChowBot'
     },
     fill: {
-        response: (userstate, argument) => { 
+        response: (userstate, argument) => {
+            let messageToPost = "";
             for(let i = 0; i < 10; i++) {
-                argument += argument;
+                messageToPost += argument;
             }
-            return argument
+            return messageToPost
         }
     }
 };
