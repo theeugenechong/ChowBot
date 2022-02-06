@@ -27,7 +27,7 @@ const commands = {
         response: (userstate, argument) => {
             let messageToPost = "";
             for(let i = 0; i < 10; i++) {
-                messageToPost += argument;
+                messageToPost += argument + " ";
             }
             return messageToPost
         }
