@@ -46,9 +46,9 @@ client.on('message', (channel, userstate, message, self) => {
     let isCommand = REGEX_COMMAND.test(message);
     if (!isCommand) return;
 
-    const [raw, command, argument] = message.toLowerCase().match(REGEX_COMMAND);
+    const [raw, command, argument] = message.match(REGEX_COMMAND);
 
-    const {response} = commands[command] || [];
+    const {response} = commands[command.toLowerCase()] || [];
 
     if (typeof response === 'function') {
         client.say(channel, response(userstate, argument));        
