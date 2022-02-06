@@ -37,7 +37,7 @@ const commands = {
 client.connect().catch(console.error);
 
 client.on('message', (channel, userstate, message, self) => {
-	const isNotBot = userstate.username.toLowerCase() !== BOT_USERNAME.toLowerCase();
+	const isNotBot = userstate.username.toLowerCase() !== process.env.BOT_USERNAME.toLowerCase();
 
     if(!isNotBot) return;
 
