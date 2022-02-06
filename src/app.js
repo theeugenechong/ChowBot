@@ -28,21 +28,21 @@ const commands = {
     },
     rr: {
         response: (channel, userstate, argument) => {
+            if (argument > 600) {
+                return 'Enter a timeout period less than 600 seconds dinkDonk'
+            }
+            
             let decision = Math.floor(Math.random() * 2);
             if (decision == 0) {
                 return `@${userstate.username}, you are safe! Okayge`
             } else {
-                if (argument < 600) {
-                    client.timeout(channel, userstate.username, argument, "Lost in Russian Roulette")
-                    .then((data) => {
-                        // data returns [channel, username, seconds, reason]
-                    }).catch((err) => {
-                        //
-                    });
-                    return 'You died! ICANT'
-                } else {
-                    return 'Enter a period less than 600 seconds'
-                }
+                client.timeout(channel, userstate.username, argument, "Lost in Russian Roulette")
+                .then((data) => {
+                    // data returns [channel, username, seconds, reason]
+                }).catch((err) => {
+                    //
+                });
+                return 'You died! ICANT'
             }
         }
     },
