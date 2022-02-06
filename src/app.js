@@ -1,5 +1,5 @@
 import tmi from 'tmi.js'
-import { BLOCKED_WORDS, BOT_USERNAME, CHANNEL_NAME, OAUTH_TOKEN, REGEX_COMMAND } from './constants';
+import { BLOCKED_WORDS, CHANNEL_NAME, REGEX_COMMAND } from './constants';
 
 const options = {
     options: { debug: true, messagesLogLevel: "info" },
@@ -8,8 +8,8 @@ const options = {
 		secure: true
 	},
 	identity: {
-		username: BOT_USERNAME,
-		password: OAUTH_TOKEN
+		username: process.env.BOT_USERNAME,
+		password: process.env.OAUTH_TOKEN
 	},
 	channels: [ CHANNEL_NAME ]
 };
