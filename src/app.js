@@ -102,7 +102,7 @@ function checkChat(channel, userstate, message) {
     isBadMessage = BLOCKED_WORDS.some(blockedWord => message.includes(blockedWord.toLowerCase()))
 
     if(isBadMessage) {
-        client.say(channel, `Hey, @${userstate.username}! You are not allowed to say that FeelsWeirdMan`)
+        client.say(channel, `Hey, @${userstate.username}! Don't say that Weirdge Tssk`)
         client.deletemessage(channel, userstate.id)
         .then((data) => {
             // data returns [channel]
