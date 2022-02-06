@@ -18,13 +18,36 @@ const client = new tmi.Client(options);
 
 const commands = {
     hello: {
-        response: (userstate, argument) => `@${userstate.username}, hello! peepoHappy Welcome to the stream!`
+        response: (channel, userstate, argument) => `@${userstate.username}, hello! peepoHey Welcome to the stream!`
     },
     github: {
         response: 'https://github.com/theeugenechong/ChowBot'
     },
+    dice: {
+        response: (channel, userstate, argument) => `@${userstate.username} rolled a ` + (1 + Math.floor(Math.random() * 6)) + `! COGGERS`
+    },
+    rr: {
+        response: (channel, userstate, argument) => {
+            let decision = Math.floor(Math.random() * 2);
+            if (decision == 0) {
+                return `@${userstate.username}, you are safe! Okayge`
+            } else {
+                if (argument < 600) {
+                    client.timeout(channel, userstate.username, argument, "Lost in Russian Roulette")
+                    .then((data) => {
+                        // data returns [channel, username, seconds, reason]
+                    }).catch((err) => {
+                        //
+                    });
+                    return 'You died! ICANT'
+                } else {
+                    return 'Enter a period less than 600 seconds'
+                }
+            }
+        }
+    },
     fill: {
-        response: (userstate, argument) => {
+        response: (channel, userstate, argument) => {
             let messageToPost = "";
             for(let i = 0; i < 10; i++) {
                 messageToPost += argument + " ";
@@ -51,7 +74,7 @@ client.on('message', (channel, userstate, message, self) => {
     const {response} = commands[command.toLowerCase()] || [];
 
     if (typeof response === 'function') {
-        client.say(channel, response(userstate, argument));        
+        client.say(channel, response(channel, userstate, argument));        
     } else if (typeof response === 'string') {
         client.say(channel, response);
     }
