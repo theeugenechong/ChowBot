@@ -34,7 +34,7 @@ const commands = {
             
             let decision = Math.floor(Math.random() * 2);
             if (decision == 0) {
-                return `@${userstate.username}, you are safe! Okayge`
+                return `@${userstate.username}, you are safe! POGGIES`
             } else {
                 client.timeout(channel, userstate.username, argument, "Lost in Russian Roulette")
                 .then((data) => {
